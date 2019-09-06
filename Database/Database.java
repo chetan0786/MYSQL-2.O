@@ -26,6 +26,7 @@ class Database
 
       public static void main(String args[])
     {
+       
         Scanner sc=new Scanner(System.in);
         ArrayList <String> funcs=new ArrayList<String>();
         funcs.add("create");
@@ -34,15 +35,27 @@ class Database
         funcs.add("update");
         funcs.add("print");
         funcs.add("delete");
+        funcs.add("desc");
         funcs.add("load");
-        funcs.add("store");
+        funcs.add("history");
         funcs.add("exit");
+       
         while(true)
         {
         String query=sc.nextLine();
-       
+            try{
+                BufferedWriter out = new BufferedWriter( 
+                    new FileWriter("history.txt", true));
+               out.write(query);
+               
+               out.append(System.lineSeparator());
+
+               out.close();
+            }
+            catch(Exception e){}
+           
         query=makequery(query);
-      
+            
         String words[]=query.split(" ");
         
         if(funcs.contains(words[0]))
@@ -175,10 +188,56 @@ class Database
                 
                 }
                 break;
+                case "desc":
+                try
+                {
+                    Desc d = new Desc();
+                    boolean res = d.checkdesc(words);
+                    if(res)
+                    {
+                        d.printdesc(words);
+                    }
+                    else
+                    {
+                        System.out.println("INVALID");
+                    
+                    }
+                }
+                catch(Exception e)
+                {
+                
+                }
+                break;
+
+                case "history":
+                try
+                {
+                    History h = new History();
+                    boolean res = h.checkhistory(words);
+                    if(res)
+                    {
+                        h.printhistory(words);
+                    }
+                    else
+                    {
+                        System.out.println("INVALID");
+                    
+                    }
+                }
+                catch(Exception e)
+                {
+                
+                }
+                break;
+
+                
                     
 
                 case "quit":
                 case "exit":
+
+                
+
                     System.exit(1);
                 default:
                     break;

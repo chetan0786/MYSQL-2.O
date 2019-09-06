@@ -1,0 +1,5 @@
+create table a(a)
+create table a(a)
+exit
+create abc
+history
